@@ -5,7 +5,7 @@ project(RustCxxCMake CXX)
 include(FetchContent)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 FetchContent_Declare(
     Corrosion
