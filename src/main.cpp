@@ -1,4 +1,4 @@
-#include "cpp_rust_bridge/lib.h"
+#include "lib.rs.h"
 #include <iostream>
 
 int main() {
