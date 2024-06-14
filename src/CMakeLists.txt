@@ -22,7 +22,7 @@ set(RUST_LIB ${CARGO_BUILD_FOLDER}/${CMAKE_STATIC_LIBRARY_PREFIX}rust_lib${CMAKE
 add_custom_command(
     OUTPUT ${RUST_BRIDGE_CPP} ${RUST_LIB}
     COMMAND CARGO_TARGET_DIR=${CARGO_TARGET_DIR} cargo build --profile ${CARGO_PROFILE} --manifest-path ${CARGO_MANIFEST}
-    DEPENDS ${RUST_LIB_SOURCE_FILE}
+    DEPENDS ${RUST_LIB_SOURCE_FILE} ${CARGO_MANIFEST}
     USES_TERMINAL
     COMMENT "Running cargo..."
 )
@@ -42,6 +42,26 @@ set_target_properties(
     rust_cxx_cmake
     PROPERTIES ADDITIONAL_CLEAN_FILES ${CARGO_TARGET_DIR}
 )
+
+if (APPLE)
+    find_library(SystemConfiguration SystemConfiguration)
+    if (NOT SystemConfiguration)
+        message(FATAL_ERROR "SystemConfiguration not found")
+    endif()
+    target_link_libraries(rust_cxx_cmake ${SystemConfiguration})
+
+    find_library(SecurityFramework Security)
+    if (NOT SecurityFramework)
+        message(FATAL_ERROR "SecurityFramework not found")
+    endif()
+    target_link_libraries(rust_cxx_cmake ${SecurityFramework})
+
+    find_library(CoreFoundation CoreFoundation)
+    if (NOT CoreFoundation)
+        message(FATAL_ERROR "CoreFoundation not found")
+    endif()
+    target_link_libraries(rust_cxx_cmake ${CoreFoundation})
+endif()
 
 # Add additional system libraries for Windows
 if(WIN32)
