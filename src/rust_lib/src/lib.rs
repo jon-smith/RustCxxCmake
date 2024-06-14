@@ -32,5 +32,4 @@ pub fn rust_cxx_http_get(url: &str, body: &str) -> Result<String> {
     res.copy_to(&mut buf)?;
 
     Ok(std::str::from_utf8(buf.as_slice()).unwrap().to_string())
-
 }
