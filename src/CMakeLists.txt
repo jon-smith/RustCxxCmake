@@ -36,7 +36,7 @@ target_include_directories(
     ${CARGO_TARGET_DIR}/cxxbridge/rust_lib/src/
 )
 
-target_link_libraries(rust_cxx_cmake ${RUST_LIB})
+target_link_libraries(rust_cxx_cmake PUBLIC ${RUST_LIB})
 
 set_target_properties(
     rust_cxx_cmake
@@ -48,19 +48,19 @@ if (APPLE)
     if (NOT SystemConfiguration)
         message(FATAL_ERROR "SystemConfiguration not found")
     endif()
-    target_link_libraries(rust_cxx_cmake ${SystemConfiguration})
+    target_link_libraries(rust_cxx_cmake PRIVATE ${SystemConfiguration})
 
     find_library(SecurityFramework Security)
     if (NOT SecurityFramework)
         message(FATAL_ERROR "SecurityFramework not found")
     endif()
-    target_link_libraries(rust_cxx_cmake ${SecurityFramework})
+    target_link_libraries(rust_cxx_cmake PRIVATE ${SecurityFramework})
 
     find_library(CoreFoundation CoreFoundation)
     if (NOT CoreFoundation)
         message(FATAL_ERROR "CoreFoundation not found")
     endif()
-    target_link_libraries(rust_cxx_cmake ${CoreFoundation})
+    target_link_libraries(rust_cxx_cmake PRIVATE ${CoreFoundation})
 endif()
 
 # Add additional system libraries for Windows
