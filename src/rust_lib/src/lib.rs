@@ -12,7 +12,7 @@ mod ffi {
 }
 
 pub fn rust_cxx_square(i: i32) -> i32 {
-    i*i
+    i * i
 }
 
 pub fn rust_cxx_wow(lol: &str) -> Result<String> {
@@ -21,9 +21,7 @@ pub fn rust_cxx_wow(lol: &str) -> Result<String> {
 
 pub fn rust_cxx_http_get(url: &str, body: &str) -> Result<String> {
     let client = reqwest::blocking::Client::new();
-    let mut res = client.get(url)
-    .body(body.to_string().clone())
-    .send()?;
+    let mut res = client.get(url).body(body.to_string().clone()).send()?;
 
     eprintln!("Response: {:?} {}", res.version(), res.status());
     eprintln!("Headers: {:#?}\n", res.headers());
