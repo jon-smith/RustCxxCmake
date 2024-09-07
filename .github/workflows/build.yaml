@@ -24,7 +24,7 @@ jobs:
     name: Build ${{ matrix.os }} ${{ matrix.compiler }}
 
     env:
-      preset: ${{ matrix.compiler }}-release
+      PRESET: ${{ matrix.compiler }}-release
 
     steps:
       - name: Checkout repo
@@ -34,10 +34,10 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Config
-        run: cmake --preset ${preset}
+        run: cmake --preset $PRESET
 
       - name: Build
-        run: cmake --build out/build/${preset}
+        run: cmake --build out/build/$PRESET
 
       - name: Run
-        run: out/build/${preset}/src/rust_cxx_cmake
+        run: out/build/$PRESET/src/rust_cxx_cmake
