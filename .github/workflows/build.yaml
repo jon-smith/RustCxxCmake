@@ -38,6 +38,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Install OpenSSL (Linux)
+        if: matrix.os == 'ubuntu-24.04'
         run: sudo apt-get update && sudo apt-get install libssl-dev
 
       - name: Install Ninja
