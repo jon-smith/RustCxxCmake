@@ -37,6 +37,9 @@ jobs:
         if: matrix.os == 'windows-2022'
         uses: ilammy/msvc-dev-cmd@v1
 
+      - name: Install OpenSSL (Linux)
+        run: sudo apt-get update && sudo apt-get install libssl-dev
+
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
 
