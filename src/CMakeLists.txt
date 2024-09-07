@@ -26,5 +26,5 @@ elseif (WIN32)
 
 elseif (LINUX)
     find_package(OpenSSL REQUIRED)
-    target_link_libraries(rust_cxx_cmake PRIVATE OpenSSL)
+    target_link_libraries(rust_cxx_cmake PRIVATE OpenSSL::OpenSSL)
 endif()
