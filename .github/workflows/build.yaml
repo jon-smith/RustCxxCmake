@@ -34,10 +34,10 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Config
-        run: cmake --preset ${{ preset }}
+        run: cmake --preset ${{ matrix.compiler }}-release
 
       - name: Build
-        run: cmake --build out/build/${{ preset }}
+        run: cmake --build out/build/${{ matrix.compiler }}-release
 
       - name: Run
-        run: out/build/${{ preset }}/src/rust_cxx_cmake
+        run: out/build/${{ matrix.compiler }}-release/src/rust_cxx_cmake
