@@ -70,7 +70,7 @@ elseif (WIN32)
     target_link_libraries(
         rust_cxx_cmake 
         PRIVATE 
-        advapi32 crypt32 ws2_32 bcrypt Secur32 Ncrypt userenv)
+        advapi32 crypt32 ws2_32 bcrypt Secur32 Ncrypt)
 
 elseif (LINUX)
 
@@ -85,6 +85,11 @@ endif()
 # Additional properties for windows builds
 
 if (WIN32)
+
+    target_link_libraries(
+        rust_cxx_cmake 
+        PRIVATE 
+        userenv)
 
     set_target_properties(
         rust_cxx_cmake
