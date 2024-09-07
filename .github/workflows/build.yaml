@@ -9,7 +9,41 @@ on:
       - main
 
 jobs:
-  build-linux-gcc:
+  build-and-run:
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-latest]
+        compiler: [gcc, msvc-x64]
+        include:
+          - os: ubuntu-24.04
+            compiler: gcc
+          - os: windows-latest
+            compiler: msvc-x64
+
+    runs-on: ${{ matrix.os }}
+
+    name: Build ${{ matrix.os }} ${{ matrix.compiler }}
+
+    env:
+      preset: ${{ matrix.compiler }}-release
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Config
+        run: cmake --preset ${preset}
+
+      - name: Build
+        run: cmake --build out/build/${preset}
+
+      - name: Run
+        run: out/build/${preset}/src/rust_cxx_cmake
+
+  build-windows-msvc:
     name: GCC Linux Build
     runs-on: ubuntu-latest
 
