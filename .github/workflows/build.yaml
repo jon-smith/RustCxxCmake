@@ -1,0 +1,30 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-linux-gcc:
+    name: Build Web App
+    runs-on: ubuntu-latest
+
+    env:
+      preset: gcc-release
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Config
+        run: cmake --preset ${preset}
+
+      - name: Build
+        run: cmake --build out/build/${preset}
+
+      - name: Run
+        run: out/build/${preset}/src/rust_cxx_cmake
