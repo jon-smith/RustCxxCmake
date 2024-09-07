@@ -70,7 +70,7 @@ elseif (WIN32)
     target_link_libraries(
         rust_cxx_cmake 
         PRIVATE 
-        "advapi32" "crypt32" "ws2_32" "bcrypt" "Secur32" "Ncrypt")
+        advapi32 crypt32 ws2_32 bcrypt Secur32 Ncrypt userenv)
 
 elseif (LINUX)
 
