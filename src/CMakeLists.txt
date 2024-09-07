@@ -43,7 +43,10 @@ set_target_properties(
     PROPERTIES ADDITIONAL_CLEAN_FILES ${CARGO_TARGET_DIR}
 )
 
-# Link system libraries for TLS used by reqwest library
+# Link system libraries, mostly for TLS used by reqwest library
+# To help find required libraries you can run:
+#     cargo rustc -q -- --print=native-static-libs
+# from src/rust_lib 
 
 if (APPLE)
 
@@ -70,7 +73,7 @@ elseif (WIN32)
     target_link_libraries(
         rust_cxx_cmake 
         PRIVATE 
-        advapi32 crypt32 ws2_32 bcrypt Secur32 Ncrypt)
+        advapi32 crypt32 ws2_32 bcrypt Secur32 Ncrypt userenv ntdll)
 
 elseif (LINUX)
 
@@ -86,17 +89,10 @@ endif()
 
 if (WIN32)
 
-    target_link_libraries(
-        rust_cxx_cmake 
-        PRIVATE 
-        userenv ntdll)
-
     set_target_properties(
         rust_cxx_cmake
         PROPERTIES
         MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
-        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}
-        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}
     )
 
 endif()
