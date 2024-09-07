@@ -89,7 +89,7 @@ if (WIN32)
     target_link_libraries(
         rust_cxx_cmake 
         PRIVATE 
-        userenv)
+        userenv ntdll)
 
     set_target_properties(
         rust_cxx_cmake
