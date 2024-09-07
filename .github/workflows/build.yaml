@@ -13,11 +13,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-latest, macos-14]
+        os: [ubuntu-24.04, windows-2022, macos-14]
         include:
           - os: ubuntu-24.04
             compiler: gcc
-          - os: windows-latest
+          - os: windows-2022
             compiler: msvc-x64
           - os: macos-14
             compiler: clang
@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure VS Toolchain (Windows)
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Install Ninja

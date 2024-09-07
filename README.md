@@ -2,9 +2,21 @@
 
 [![build](https://github.com/jon-smith/RustCxxCmake/actions/workflows/build.yaml/badge.svg)](https://github.com/jon-smith/RustCxxCmake/actions/workflows/build.yaml)
 
-Calling Rust code from C++ using [Cxx](https://github.com/dtolnay/cxx) and build using CMake and [Corrosion](https://github.com/AndrewGaspar/corrosion).
+Calling Rust code from c++ using [Cxx](https://github.com/dtolnay/cxx) and build using CMake and [Corrosion](https://github.com/AndrewGaspar/corrosion).
 
-Rust code to be exposed to C++ can be found in `src/rust_lib/src/lib.rs`, and C++ calling code in `src/main.cpp`.
+## Code
+
+Rust code to be exposed to c++ can be found in `src/rust_lib/src/lib.rs`, and c++ calling code in `src/main.cpp`.
+
+We expose the following:
+
+- `rust_cxx_square`: Simple function taking and returning a primitive
+
+- `rust_cxx_rotate`: Using a shared structure `XY`, available to both rust and c++
+
+- `rust_cxx_wow`: Interfacing between c++ and rust strings
+
+- `rust_cxx_http_get`: Calling rust library dependencies, relying on external system libraries for SSL (added to [CMakeLists.txt](./src/CMakeLists.txt))
 
 # Build/Run
 
