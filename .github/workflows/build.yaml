@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-linux-gcc:
-    name: Build Web App
+    name: GCC Linux Build
     runs-on: ubuntu-latest
 
     env:
@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Config
         run: cmake --preset ${preset}
