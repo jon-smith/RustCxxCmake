@@ -43,7 +43,10 @@ set_target_properties(
     PROPERTIES ADDITIONAL_CLEAN_FILES ${CARGO_TARGET_DIR}
 )
 
+# Link system libraries for TLS used by reqwest library
+
 if (APPLE)
+
     find_library(SystemConfiguration SystemConfiguration)
     if (NOT SystemConfiguration)
         message(FATAL_ERROR "SystemConfiguration not found")
@@ -61,11 +64,28 @@ if (APPLE)
         message(FATAL_ERROR "CoreFoundation not found")
     endif()
     target_link_libraries(rust_cxx_cmake PRIVATE ${CoreFoundation})
+
+elseif (WIN32)
+
+    target_link_libraries(
+        rust_cxx_cmake 
+        PRIVATE 
+        "advapi32" "crypt32" "ws2_32" "bcrypt" "Secur32" "Ncrypt")
+
+elseif (LINUX)
+
+    find_package(OpenSSL REQUIRED)
+    target_link_libraries(
+        rust_cxx_cmake 
+        PRIVATE 
+        OpenSSL::SSL OpenSSL::Crypto)
+
 endif()
 
-# Add additional system libraries for Windows
-if(WIN32)
-    target_link_libraries(rust_cxx_cmake userenv ws2_32 bcrypt)
+# Additional properties for windows builds
+
+if (WIN32)
+
     set_target_properties(
         rust_cxx_cmake
         PROPERTIES
@@ -73,4 +93,5 @@ if(WIN32)
         RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}
         RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}
     )
+
 endif()
