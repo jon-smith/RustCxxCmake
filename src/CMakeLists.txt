@@ -21,7 +21,7 @@ set(RUST_LIB ${CARGO_BUILD_FOLDER}/${CMAKE_STATIC_LIBRARY_PREFIX}rust_lib${CMAKE
 # Add a custom command that builds the rust crate and generates C++ bridge code
 add_custom_command(
     OUTPUT ${RUST_BRIDGE_CPP} ${RUST_LIB}
-    COMMAND CARGO_TARGET_DIR=${CARGO_TARGET_DIR} cargo build --profile ${CARGO_PROFILE} --manifest-path ${CARGO_MANIFEST}
+    COMMAND cargo build --profile ${CARGO_PROFILE} --manifest-path ${CARGO_MANIFEST} --target-dir ${CARGO_TARGET_DIR}
     DEPENDS ${RUST_LIB_SOURCE_FILE} ${CARGO_MANIFEST}
     USES_TERMINAL
     COMMENT "Running cargo..."
