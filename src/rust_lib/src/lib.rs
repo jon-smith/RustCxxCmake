@@ -20,7 +20,7 @@ mod ffi {
 
         fn rust_cxx_rotate(point: XY, radians: f64) -> XY;
 
-        fn rust_cxx_wow(lol: &str) -> Result<String>;
+        fn rust_cxx_wow(message: &str) -> Result<String>;
 
         fn rust_cxx_http_get(url: &str, body: &str) -> Result<String>;
     }
@@ -51,8 +51,8 @@ pub fn rust_cxx_rotate(point: XY, radians: f64) -> XY {
     }
 }
 
-pub fn rust_cxx_wow(lol: &str) -> Result<String> {
-    Ok(format!("{}. wow.", lol))
+pub fn rust_cxx_wow(message: &str) -> Result<String> {
+    Ok(format!("{}. wow.", message))
 }
 
 pub fn rust_cxx_http_get(url: &str, body: &str) -> Result<String> {
