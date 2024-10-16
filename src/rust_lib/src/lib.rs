@@ -10,7 +10,13 @@ mod ffi {
     }
 
     extern "Rust" {
+        type MessageContainer;
+
         fn rust_cxx_square(i: i32) -> i32;
+
+        fn rust_cxx_build_message_container(message: &str) -> Box<MessageContainer>;
+
+        fn rust_cxx_print_message(container: &Box<MessageContainer>);
 
         fn rust_cxx_rotate(point: XY, radians: f64) -> XY;
 
@@ -20,8 +26,22 @@ mod ffi {
     }
 }
 
+pub struct MessageContainer {
+    pub message: String,
+}
+
 pub fn rust_cxx_square(i: i32) -> i32 {
     i * i
+}
+
+pub fn rust_cxx_build_message_container(message: &str) -> Box<MessageContainer> {
+    Box::new(MessageContainer {
+        message: message.into(),
+    })
+}
+
+pub fn rust_cxx_print_message(container: &Box<MessageContainer>) {
+    println!("Message: {}", container.message);
 }
 
 pub fn rust_cxx_rotate(point: XY, radians: f64) -> XY {

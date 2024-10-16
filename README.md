@@ -12,6 +12,10 @@ We expose the following:
 
 - `rust_cxx_square`: Simple function taking and returning a primitive
 
+- `rust_cxx_build_message_container`: Function creating and returning an opaque rust structure
+
+- `rust_cxx_print_message`: Function taking in and acting on an opaque rust structure
+
 - `rust_cxx_rotate`: Using a shared structure `XY`, available to both rust and c++
 
 - `rust_cxx_wow`: Interfacing between c++ and rust strings
