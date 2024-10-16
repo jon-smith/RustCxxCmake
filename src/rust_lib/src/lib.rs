@@ -1,3 +1,5 @@
+#![allow(clippy::borrowed_box)] // Allow &Box to allow C++ to pass in opaque types
+
 use anyhow::Result;
 use ffi::XY;
 
