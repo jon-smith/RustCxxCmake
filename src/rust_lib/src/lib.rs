@@ -1,3 +1,5 @@
+#![allow(clippy::borrowed_box)] // Allow &Box to allow C++ to pass in opaque types
+
 use anyhow::Result;
 use ffi::XY;
 
@@ -10,18 +12,38 @@ mod ffi {
     }
 
     extern "Rust" {
+        type MessageContainer;
+
         fn rust_cxx_square(i: i32) -> i32;
+
+        fn rust_cxx_build_message_container(message: &str) -> Box<MessageContainer>;
+
+        fn rust_cxx_print_message(container: &Box<MessageContainer>);
 
         fn rust_cxx_rotate(point: XY, radians: f64) -> XY;
 
-        fn rust_cxx_wow(lol: &str) -> Result<String>;
+        fn rust_cxx_wow(message: &str) -> Result<String>;
 
         fn rust_cxx_http_get(url: &str, body: &str) -> Result<String>;
     }
 }
 
+pub struct MessageContainer {
+    pub message: String,
+}
+
 pub fn rust_cxx_square(i: i32) -> i32 {
     i * i
+}
+
+pub fn rust_cxx_build_message_container(message: &str) -> Box<MessageContainer> {
+    Box::new(MessageContainer {
+        message: message.into(),
+    })
+}
+
+pub fn rust_cxx_print_message(container: &Box<MessageContainer>) {
+    println!("Message: {}", container.message);
 }
 
 pub fn rust_cxx_rotate(point: XY, radians: f64) -> XY {
@@ -31,8 +53,8 @@ pub fn rust_cxx_rotate(point: XY, radians: f64) -> XY {
     }
 }
 
-pub fn rust_cxx_wow(lol: &str) -> Result<String> {
-    Ok(format!("{}. wow.", lol))
+pub fn rust_cxx_wow(message: &str) -> Result<String> {
+    Ok(format!("{}. wow.", message))
 }
 
 pub fn rust_cxx_http_get(url: &str, body: &str) -> Result<String> {

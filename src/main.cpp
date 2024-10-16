@@ -8,6 +8,12 @@ int main()
   // Primitive type input and result
   std::cout << "2 x 2 = " << rust_cxx_square(2) << "\n";
 
+  // Create opaque rust structure
+  const auto message = rust_cxx_build_message_container("hello");
+
+  // Use opaque structure in rust function
+  rust_cxx_print_message(message);
+
   // String input and result
   std::cout << "wow = " << std::string(rust_cxx_wow("cpp")) << "\n";
 
