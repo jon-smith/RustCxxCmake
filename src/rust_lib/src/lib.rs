@@ -1,7 +1,7 @@
 #![allow(clippy::borrowed_box)] // Allow &Box to allow C++ to pass in opaque types
 
 use anyhow::Result;
-use ffi::XY;
+use ffi::{CompositeStructure, XY};
 
 #[cxx::bridge]
 mod ffi {
@@ -9,6 +9,11 @@ mod ffi {
     struct XY {
         pub x: f64,
         pub y: f64,
+    }
+
+    struct CompositeStructure {
+        pub point: XY,
+        pub value: f64,
     }
 
     extern "Rust" {
@@ -21,6 +26,8 @@ mod ffi {
         fn rust_cxx_print_message(container: &Box<MessageContainer>);
 
         fn rust_cxx_rotate(point: XY, radians: f64) -> XY;
+
+        fn rust_cxx_build_composite(point: XY, value: f64) -> CompositeStructure;
 
         fn rust_cxx_wow(message: &str) -> Result<String>;
 
@@ -50,6 +57,13 @@ pub fn rust_cxx_rotate(point: XY, radians: f64) -> XY {
     XY {
         x: (point.x * f64::cos(radians) - point.y * f64::sin(radians)),
         y: (point.x * f64::sin(radians) + point.y * f64::cos(radians)),
+    }
+}
+
+fn rust_cxx_build_composite(point: XY, value: f64) -> CompositeStructure {
+    CompositeStructure {
+        point: point,
+        value: value,
     }
 }
 

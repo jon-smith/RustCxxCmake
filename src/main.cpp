@@ -21,6 +21,10 @@ int main()
   const auto rotationResult = rust_cxx_rotate(XY{.x = 0, .y = 1}, std::numbers::pi);
   std::cout << std::format("Rotation result: {},{}\n", rotationResult.x, rotationResult.y);
 
+  // Shared composite structure
+  const auto compositeStruct = rust_cxx_build_composite(XY{.x = 0, .y = 1}, std::numbers::pi);
+  std::cout << std::format("Composite struct values: {},{},{}\n", compositeStruct.point.x, compositeStruct.point.y, compositeStruct.value);
+
   // Function that relies on system libraries
   const auto getResponse = std::string(rust_cxx_http_get("https://httpbin.org/get", ""));
   std::cout << std::format("GET: {}\n", getResponse);
