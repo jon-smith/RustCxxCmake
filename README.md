@@ -18,6 +18,8 @@ We expose the following:
 
 - `rust_cxx_rotate`: Using a shared structure `XY`, available to both rust and c++
 
+- `rust_cxx_build_composite`: Using a shared structure `CompositeStructure`, containing another shared structure `XY` as a member, available to both rust and c++
+
 - `rust_cxx_wow`: Interfacing between c++ and rust strings
 
 - `rust_cxx_http_get`: Calling rust library dependencies, relying on external system libraries for SSL (added to [CMakeLists.txt](./src/CMakeLists.txt))
