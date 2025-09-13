@@ -29,8 +29,9 @@ mod ffi {
 
         fn rust_cxx_build_composite(point: XY, value: f64) -> CompositeStructure;
 
-        fn rust_cxx_wow(message: &str) -> Result<String>;
+        fn rust_cxx_wow(message: &str) -> String;
 
+        // This returns a Result type, which is mapped to a C++ exception on error
         fn rust_cxx_http_get(url: &str, body: &str) -> Result<String>;
     }
 }
@@ -67,8 +68,8 @@ fn rust_cxx_build_composite(point: XY, value: f64) -> CompositeStructure {
     }
 }
 
-pub fn rust_cxx_wow(message: &str) -> Result<String> {
-    Ok(format!("{}. wow.", message))
+pub fn rust_cxx_wow(message: &str) -> String {
+    format!("{}. wow.", message)
 }
 
 pub fn rust_cxx_http_get(url: &str, body: &str) -> Result<String> {
@@ -81,5 +82,5 @@ pub fn rust_cxx_http_get(url: &str, body: &str) -> Result<String> {
     let mut buf = Vec::new();
     res.copy_to(&mut buf)?;
 
-    Ok(std::str::from_utf8(buf.as_slice()).unwrap().to_string())
+    Ok(std::str::from_utf8(buf.as_slice()).map(|s| s.to_string())?)
 }

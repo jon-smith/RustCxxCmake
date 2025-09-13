@@ -25,9 +25,28 @@ int main()
   const auto compositeStruct = rust_cxx_build_composite(XY{.x = 0, .y = 1}, std::numbers::pi);
   std::cout << std::format("Composite struct values: {},{},{}\n", compositeStruct.point.x, compositeStruct.point.y, compositeStruct.value);
 
-  // Function that relies on system libraries
-  const auto getResponse = std::string(rust_cxx_http_get("https://httpbin.org/get", ""));
-  std::cout << std::format("GET: {}\n", getResponse);
+  // Function that relies on system libraries, and throws an exception on error
+  try
+  {
+    const auto getResponse = std::string(rust_cxx_http_get("https://httpbin.org/get", ""));
+    std::cout << std::format("HTTP BIN GET: {}\n", getResponse);
+  }
+  catch (const std::exception &e)
+  {
+    std::cerr << std::format("HTTP BIN GET failed: {}\n", e.what());
+  }
+
+  // Again with an invalid URL to demonstrate rust Result errors being turned into exceptions
+  try
+  {
+    const auto getResponse = std::string(rust_cxx_http_get("this isn't a valid url", ""));
+    std::cerr << std::format("Invalid url, we shouldn't see this message!: {}\n", getResponse);
+  }
+  catch (const std::exception &e)
+  {
+    // Expected outcome
+    std::cout << std::format("Invalid url failed: {}\n", e.what());
+  }
 
   return 0;
 }
